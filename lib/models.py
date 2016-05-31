@@ -9,7 +9,7 @@
 Models to predict binding affinity based on molecular properties.
 """
 
-from __future__ import print_function, division
+from __future__ import division
 
 def IC_NIS(ic_cc, ic_ca, ic_pp, ic_pa, p_nis_a, p_nis_c):
     """

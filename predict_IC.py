@@ -42,9 +42,8 @@ def calculate_ic(structure, d_cutoff=5.5, selection=None):
 
     if selection:
         _sd = selection_dict
-        _chain = lambda x: x.parent.id
-        ic_list = [c for c in all_list if (_chain(c[0]) in _sd and _chain(c[1]) in _sd)
-                    and (_sd[_chain(c[0])] != _sd[_chain(c[1])]) ]
+        ic_list = [c for c in all_list if (c[0].parent.id in _sd and c[1].parent.id in _sd)
+                    and (_sd[c[0].parent.id] != _sd[c[1].parent.id]) ]
     else:
         ic_list = [c for c in all_list if c[0].parent.id != c[1].parent.id]
 
@@ -81,15 +80,14 @@ def analyse_nis(sasa_dict, acc_threshold=0.05, selection=None):
     """
 
     _data = aa_properties.aa_character_protorp
-    _char_to_index = lambda x: {'A': 0, 'C': 1, 'P': 2}.get(x)
+    _char_to_index = {'A': 0, 'C': 1, 'P': 2}
     count = [0, 0, 0]
 
     for res, rsa in sasa_dict.iteritems():
         chain, resn, resi = res
         if rsa >= acc_threshold:
-            aa_character = _data[resn]
-            aa_index = _char_to_index(aa_character)
-            count[aa_index] += 1
+            aa_character = _char_to_index.get(_data[resn])
+            count[aa_character] += 1
 
     percentages = map(lambda x: 100*x/sum(count), count)
     # print('[+] No. of buried interface residues: {0}'.format(sum(count)))

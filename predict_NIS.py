@@ -20,7 +20,6 @@ __author__ = ["Panagiotis Kastritis", "Joao Rodrigues"]
 import os
 import sys
 
-from data import aa_properties
 from lib.freesasa import execute_freesasa
 from lib.models import NIS
 from lib.utils import _check_path

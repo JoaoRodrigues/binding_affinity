@@ -68,20 +68,26 @@ def parse_structure(path):
 
     # Remove HETATMs and solvent
     res_list = list(s.get_residues())
-    _ignore = lambda r: r.id[0][0] == 'W' or r.id[0][0] == 'H'
+
+    def _is_het(residue):
+        return residue.id[0][0] == 'W' or residue.id[0][0] == 'H'
+
     for res in res_list:
-        if _ignore(res):
+        if _is_het(res):
             chain = res.parent
             chain.detach_child(res.id)
         elif not is_aa(res, standard=True):
             raise ValueError('Unsupported non-standard amino acid found: {0}'.format(res.resname))
     n_res = len(list(s.get_residues()))
-    
+
     # Remove Hydrogens
     atom_list = list(s.get_atoms())
-    _ignore = lambda x: x.element == 'H'
+
+    def _is_hydrogen(atom):
+        return atom.element == 'H'
+
     for atom in atom_list:
-        if _ignore(atom):
+        if _is_hydrogen(atom):
             residue = atom.parent
             residue.detach_child(atom.name)
 

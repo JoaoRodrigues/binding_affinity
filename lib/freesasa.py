@@ -49,7 +49,9 @@ def execute_freesasa(structure, selection=None):
     # freesasa is very picky with line width (80 characters or fails!)
     # Select chains if necessary
     class ChainSelector(Select):
+        """Selector class to filter for specific chains"""
         def accept_chain(self, chain):
+            """Returns True for chains within the selection"""
             if selection and chain.id in selection:
                 return 1
             elif not selection:

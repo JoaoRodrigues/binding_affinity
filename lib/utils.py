@@ -25,8 +25,6 @@ def _check_path(path):
     return full_path
 
 def dg_to_kd(dg, temperature=25.0):
-    """Coversion of DG into the dissociation constant kd """
-    
-    temp_in_K = temperature + 273.15
-    RT = 0.0019858775 * temp_in_K
-    return math.exp(dg / RT)
+    """Conversion of DG into the dissociation constant kd """
+
+    return math.exp(dg / (0.0019858775 * (temperature + 273.15)))
